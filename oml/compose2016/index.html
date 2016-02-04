@@ -97,15 +97,19 @@ a code { text-decoration: underline; }
 
 <h2 id="AStatsandMLlibraryinOCaml">A Stats and ML library in OCaml</h2>
 
+<p><a href='http://github.com/rleonid' style='color:white'>Leonid Rozenberg</a>,<br />
+<a href='http://composeconference.org' style='color:white'>Compose Conference</a>,<br /></p>
+<div style='color:white'> Feb 4, 2016.</div>
+
 </section><section><h3>Slides are available here</h3>
 
-<p>Insert Awesome Url</p>
+<p>http://rleonid.github.io/slides/oml/compose2016/index.html</p>
 </section><section><h3>Who am I?</h3>
 
 <ul><li>Software/ML dude at the <strong>Hammer Lab</strong> within the
  <strong>Icahn Institute for Genomics and Multiscale Biology</strong>
  <img src='img/proj_mountsinai.jpg' alt='Projection' />.
- Working at the intersection of biology, computers and math.<ul><li>Strong advocates of open source.</li></ul></li><li>Background in finance.</li></ul>
+ Working at the intersection of biology, computers and math.<ul><li>Strong advocates of open source.</li></ul></li><li>Background in finance.</li><li>I&#39;m a <em>type</em> addict<ul><li><code>Array.fold_left</code> ... leads to thinking.</li><li><code>:set +t</code> in my <code>~/.ghci</code></li></ul></li></ul>
 
 </section><section><h3>What am I selling?</h3>
 
@@ -322,7 +326,8 @@ Corinna Cortes and Christopher J.C. Burges.</p>
         </span><span class="kw">type</span><span class="text"> </span><span class="id">samples</span><span class="text"> = (</span><span class="id">clas</span><span class="text"> * </span><span class="id">feature</span><span class="text">) </span><span class="kw3">list</span><span class="text">
         </span><span class="kw">val</span><span class="text"> </span><span class="id">estimate</span><span class="text"> : ?</span><span class="id">opt</span><span class="text">:</span><span class="id">opt</span><span class="text"> -&gt; ?</span><span class="id">classes</span><span class="text">:</span><span class="id">clas</span><span class="text"> </span><span class="kw3">list</span><span class="text"> -&gt;
                         </span><span class="id">samples</span><span class="text"> -&gt; </span><span class="id">t</span><span class="text">
-        </span><span class="kw">val</span><span class="text"> </span><span class="id">opt</span><span class="text"> : ?</span><span class="id">lambda</span><span class="text">:</span><span class="kw3">float</span><span class="text"> -&gt; ?</span><span class="id">tolerance</span><span class="text">:</span><span class="kw3">float</span><span class="text"> -&gt; </span><span class="kw3">unit</span><span class="text"> -&gt; </span><span class="id">opt</span><span class="text">
+        </span><span class="kw">val</span><span class="text"> </span><span class="id">opt</span><span class="text"> : ?</span><span class="id">lambda</span><span class="text">:</span><span class="kw3">float</span><span class="text"> -&gt; ?</span><span class="id">tolerance</span><span class="text">:</span><span class="kw3">float</span><span class="text"> -&gt;
+                    </span><span class="kw3">unit</span><span class="text"> -&gt; </span><span class="id">opt</span><span class="text">
         </span><span class="kw">val</span><span class="text"> </span><span class="id">coefficients</span><span class="text"> : </span><span class="id">t</span><span class="text"> -&gt; </span><span class="kw3">float</span><span class="text"> </span><span class="kw3">array</span><span class="text"> </span><span class="kw3">array</span><span class="text">
         </span><span class="kw">val</span><span class="text"> </span><span class="id">class_order</span><span class="text"> : </span><span class="id">t</span><span class="text"> -&gt; </span><span class="id">clas</span><span class="text"> </span><span class="kw3">list</span><span class="text">
       </span><span class="kw1">end</span><span class="text">
@@ -330,9 +335,12 @@ Corinna Cortes and Christopher J.C. Burges.</p>
 
 </section><section><h3>Demo time: MNIST. load the data</h3>
 
+<p><a href='https://github.com/hammerlab/oml/blob/master/src/scripts/mnist_test.ml'>src/scripts/mnist_test.ml</a></p>
 <pre><span class="directive">#require</span><span class="text"> </span><span class="string">"dsfo"</span><span class="text"> ;;
-</span><span class="kw">let</span><span class="text"> </span><span class="id">m_train</span><span class="text"> = </span><span class="kw2">Mnist</span><span class="text">.</span><span class="id">data</span><span class="text"> </span><span class="kw4">~dir</span><span class="text">:</span><span class="string">"../dsfo"</span><span class="text"> `</span><span class="kw2">Train</span><span class="text"> ;;
-</span><span class="kw">let</span><span class="text"> </span><span class="id">m_test</span><span class="text"> = </span><span class="kw2">Mnist</span><span class="text">.</span><span class="id">data</span><span class="text"> </span><span class="kw4">~dir</span><span class="text">:</span><span class="string">"../dsfo"</span><span class="text"> `</span><span class="kw2">Test</span><span class="text"> ;;
+</span><span class="kw2">Mnist</span><span class="text">.</span><span class="id">download</span><span class="text"> `</span><span class="kw2">Train</span><span class="text"> ;;
+</span><span class="kw2">Mnist</span><span class="text">.</span><span class="id">download</span><span class="text"> `</span><span class="kw2">Test</span><span class="text"> ;;
+</span><span class="kw">let</span><span class="text"> </span><span class="id">m_train</span><span class="text"> = </span><span class="kw2">Mnist</span><span class="text">.</span><span class="id">data</span><span class="text"> `</span><span class="kw2">Train</span><span class="text"> ;;
+</span><span class="kw">let</span><span class="text"> </span><span class="id">m_test</span><span class="text"> = </span><span class="kw2">Mnist</span><span class="text">.</span><span class="id">data</span><span class="text"> `</span><span class="kw2">Test</span><span class="text"> ;;
 </span><span class="kw">val</span><span class="text"> </span><span class="id">m_train</span><span class="text"> : (</span><span class="kw3">float</span><span class="text">, </span><span class="kw2">Bigarrayo</span><span class="text">.</span><span class="id">float64_elt</span><span class="text">, </span><span class="kw2">Bigarrayo</span><span class="text">.</span><span class="id">fortran_layout</span><span class="text">) </span><span class="kw2">Bigarrayo</span><span class="text">.</span><span class="kw2">A2</span><span class="text">.</span><span class="id">t</span><span class="text"> =
         </span><span class="kw2">C1</span><span class="text">  </span><span class="kw2">C2</span><span class="text">  </span><span class="kw2">C3</span><span class="text">     </span><span class="kw2">C59998</span><span class="text"> </span><span class="kw2">C59999</span><span class="text"> </span><span class="kw2">C60000</span><span class="text">
     </span><span class="kw2">R1</span><span class="text">   </span><span class="numeric">0</span><span class="text">   </span><span class="numeric">0</span><span class="text">   </span><span class="numeric">0</span><span class="text"> ...      </span><span class="numeric">0</span><span class="text">      </span><span class="numeric">0</span><span class="text">      </span><span class="numeric">0</span><span class="text">
@@ -444,17 +452,20 @@ Corinna Cortes and Christopher J.C. Burges.</p>
 
 </section><section><h3>Demo time: MNIST, evaluate on test data</h3>
 
-<pre><span class="kw1">#</span><span class="text"> </span><span class="kw">let</span><span class="text"> </span><span class="id">perf_test</span><span class="text"> = </span><span class="id">s_test</span><span class="text"> |&gt; </span><span class="kw2">List</span><span class="text">.</span><span class="id">map</span><span class="text"> (</span><span class="kw">fun</span><span class="text"> (</span><span class="id">c</span><span class="text">, </span><span class="id">f</span><span class="text">) -&gt; </span><span class="id">c</span><span class="text">, </span><span class="kw2">P</span><span class="text">.</span><span class="id">most_likely</span><span class="text"> (</span><span class="kw2">MnistLr</span><span class="text">.</span><span class="id">eval</span><span class="text"> </span><span class="id">mnist_lr</span><span class="text"> </span><span class="id">f</span><span class="text">)) ;;
+<pre><span class="kw1">#</span><span class="text"> </span><span class="kw">let</span><span class="text"> </span><span class="id">perf_test</span><span class="text"> =
+    </span><span class="id">s_test</span><span class="text">
+    |&gt; </span><span class="kw2">List</span><span class="text">.</span><span class="id">map</span><span class="text"> (</span><span class="kw">fun</span><span class="text"> (</span><span class="id">c</span><span class="text">, </span><span class="id">f</span><span class="text">) -&gt; </span><span class="id">c</span><span class="text">, </span><span class="kw2">P</span><span class="text">.</span><span class="id">most_likely</span><span class="text"> (</span><span class="kw2">MnistLr</span><span class="text">.</span><span class="id">eval</span><span class="text"> </span><span class="id">mnist_lr</span><span class="text"> </span><span class="id">f</span><span class="text">)) ;;
 </span><span class="kw">val</span><span class="text"> </span><span class="id">perf_test</span><span class="text"> : (</span><span class="kw3">int</span><span class="text"> * </span><span class="kw2">MnistLr</span><span class="text">.</span><span class="id">clas</span><span class="text">) </span><span class="kw3">list</span><span class="text"> =
 [(</span><span class="numeric">8</span><span class="text">, </span><span class="numeric">8</span><span class="text">); (</span><span class="numeric">3</span><span class="text">, </span><span class="numeric">3</span><span class="text">); (</span><span class="numeric">2</span><span class="text">, </span><span class="numeric">2</span><span class="text">); (</span><span class="numeric">1</span><span class="text">, </span><span class="numeric">1</span><span class="text">); (</span><span class="numeric">5</span><span class="text">, </span><span class="numeric">5</span><span class="text">); (</span><span class="numeric">2</span><span class="text">, </span><span class="numeric">2</span><span class="text">); (</span><span class="numeric">5</span><span class="text">, </span><span class="numeric">5</span><span class="text">); (</span><span class="numeric">10</span><span class="text">, </span><span class="numeric">10</span><span class="text">); ...]
 
-</span><span class="kw1">#</span><span class="text"> </span><span class="kw">let</span><span class="text"> </span><span class="id">correct_test</span><span class="text"> = </span><span class="kw2">List</span><span class="text">.</span><span class="id">fold_left</span><span class="text"> (</span><span class="kw">fun</span><span class="text"> </span><span class="id">c</span><span class="text"> (</span><span class="id">a</span><span class="text">,</span><span class="id">p</span><span class="text">) -&gt; </span><span class="kw1">if</span><span class="text"> </span><span class="id">a</span><span class="text"> = </span><span class="id">p</span><span class="text"> </span><span class="kw1">then</span><span class="text"> </span><span class="id">c</span><span class="text"> + </span><span class="numeric">1</span><span class="text"> </span><span class="kw1">else</span><span class="text"> </span><span class="id">c</span><span class="text">) </span><span class="numeric">0</span><span class="text"> </span><span class="id">perf_test</span><span class="text"> ;;
+</span><span class="kw1">#</span><span class="text"> </span><span class="kw">let</span><span class="text"> </span><span class="id">correct_test</span><span class="text"> =
+    </span><span class="kw2">List</span><span class="text">.</span><span class="id">fold_left</span><span class="text"> (</span><span class="kw">fun</span><span class="text"> </span><span class="id">c</span><span class="text"> (</span><span class="id">a</span><span class="text">,</span><span class="id">p</span><span class="text">) -&gt; </span><span class="kw1">if</span><span class="text"> </span><span class="id">a</span><span class="text"> = </span><span class="id">p</span><span class="text"> </span><span class="kw1">then</span><span class="text"> </span><span class="id">c</span><span class="text"> + </span><span class="numeric">1</span><span class="text"> </span><span class="kw1">else</span><span class="text"> </span><span class="id">c</span><span class="text">) </span><span class="numeric">0</span><span class="text"> </span><span class="id">perf_test</span><span class="text">;;
 </span><span class="kw">val</span><span class="text"> </span><span class="id">correct_test</span><span class="text"> : </span><span class="kw3">int</span><span class="text"> = </span><span class="numeric">9263</span><span class="text">
 
-</span><span class="kw1">#</span><span class="text"> </span><span class="kw">let</span><span class="text"> </span><span class="id">total_test</span><span class="text"> = </span><span class="kw2">List</span><span class="text">.</span><span class="id">length</span><span class="text"> </span><span class="id">perf_test</span><span class="text"> ;;
+</span><span class="kw1">#</span><span class="text"> </span><span class="kw">let</span><span class="text"> </span><span class="id">total_test</span><span class="text"> = </span><span class="kw2">List</span><span class="text">.</span><span class="id">length</span><span class="text"> </span><span class="id">perf_test</span><span class="text">;;
 </span><span class="kw">val</span><span class="text"> </span><span class="id">total_test</span><span class="text"> : </span><span class="kw3">int</span><span class="text"> = </span><span class="numeric">10000</span><span class="text">
 
-</span><span class="kw1">#</span><span class="text"> </span><span class="kw">let</span><span class="text"> () = </span><span class="kw2">Printf</span><span class="text">.</span><span class="id">printf</span><span class="text"> </span><span class="string">"test %0.3f correct\n"</span><span class="text"> ((</span><span class="kw3">float</span><span class="text"> </span><span class="id">correct_test</span><span class="text">) /. (</span><span class="kw3">float</span><span class="text"> </span><span class="id">total_test</span><span class="text">))
+</span><span class="kw1">#</span><span class="text"> </span><span class="kw2">Printf</span><span class="text">.</span><span class="id">printf</span><span class="text"> </span><span class="string">"test %0.3f correct\n"</span><span class="text"> ((</span><span class="kw3">float</span><span class="text"> </span><span class="id">correct_test</span><span class="text">) /. (</span><span class="kw3">float</span><span class="text"> </span><span class="id">total_test</span><span class="text">));;
 </span><span class="id">test</span><span class="text"> </span><span class="numeric">0.926</span><span class="text"> </span><span class="id">correct</span><span class="text">         </span></pre>
 
 </section><section><h3>Three Lessons for OCaml: 1.</h3>
@@ -490,9 +501,8 @@ Corinna Cortes and Christopher J.C. Burges.</p>
   </span><span class="kw1">done</span><span class="text">;
   !</span><span class="id">s</span></pre>
 
-</section><section><h3>Three Reasons to use types in ML: 1.</h3>
+</section><section><h3>Three Reasons to use types in ML: Problem Domain</h3>
 
-<p>Precision of problem domain</p>
 <pre><span class="kw">type</span><span class="text"> </span><span class="id">amino_acid</span><span class="text"> =
   | </span><span class="kw2">A</span><span class="text"> | </span><span class="kw2">C</span><span class="text"> | </span><span class="kw2">D</span><span class="text"> | </span><span class="kw2">E</span><span class="text"> | </span><span class="kw2">F</span><span class="text"> | </span><span class="kw2">G</span><span class="text"> | </span><span class="kw2">H</span><span class="text"> | </span><span class="kw2">I</span><span class="text"> | </span><span class="kw2">K</span><span class="text"> | </span><span class="kw2">L</span><span class="text">
   | </span><span class="kw2">M</span><span class="text"> | </span><span class="kw2">N</span><span class="text"> | </span><span class="kw2">P</span><span class="text"> | </span><span class="kw2">Q</span><span class="text"> | </span><span class="kw2">R</span><span class="text"> | </span><span class="kw2">S</span><span class="text"> | </span><span class="kw2">T</span><span class="text"> | </span><span class="kw2">V</span><span class="text"> | </span><span class="kw2">W</span><span class="text"> | </span><span class="kw2">Y</span><span class="text">
@@ -509,23 +519,27 @@ Corinna Cortes and Christopher J.C. Burges.</p>
   | </span><span class="kw2">Nielson</span><span class="text"> </span><span class="kw">of</span><span class="text"> </span><span class="kw3">float</span><span class="text">    </span><span class="comment">(* max 0 (1.0 - log b / log cap *)</span><span class="text">
   | </span><span class="kw2">NielCon</span><span class="text"> </span><span class="kw">of</span><span class="text"> </span><span class="kw3">float</span></pre>
 
-</section><section><h3>Three Reasons to use types in ML: 2.</h3>
+</section><section><h3>Three Reasons to use types in ML: Specificity</h3>
 
-<ol><li class="fragment roll-in">Precision of method: specify the underlying transformation.<ul><li class="fragment roll-in">Yes, a <em>statistician</em> knows how to use <code>R</code> and <code>scipy.</code> but would a non-expert know?
- For example: Suppress the intercept in regression in R:</li></ul></li></ol>
+<ul><li><p>We can be precise</p>
+</li><li><p>Yes, a <em>statistician</em> knows how to use <code>R</code> and <code>scipy</code> but would a non-expert know?
+ For example: Suppress the intercept in regression in R:</p>
+</li></ul>
 
-<pre class="terminal"><code class="normal ">```commands
-model &lt;- fit(y ~ 0 + x1 + x2, data = bar)
-model &lt;- glm(y ~ x1 + x2 - 1, data = bar)
-```
+<pre class="terminal">model &lt;- fit(y ~ 0 + x1 + x2, data = bar)
+model &lt;- glm(y ~ x1 + x2 - 1, data = bar)</span></code></pre>
 
-or OML
-```commands
-# Rm.(regress ~opt:(opt ~add_constant_column:false ())) ;;
-Rm.input array -&gt; resp:float array -&gt; Rm.t = &lt;fun&gt;
-```</code></pre><ol><li>regression, classification (... other methods) aren&#39;t <em>objects</em>:<ul><li><strong>Functors</strong>. Typeful transformations.</li></ul></li><li>Step 1.<ul><li><code>val linear_regress : float array -&gt; float array -&gt; float</code></li><li><code>(clas * feature) list -&gt; (feature -&gt; clas Probabilities.t)</code></li><li>Really step 0.1</li></ul></li><li>Step 2. Dependent types?<ul><li>Normally distributed errors.</li><li>Data bounded to specific ranges.</li></ul></li></ol>
+<p>or Oml</p>
+<pre class="terminal"># Rm.(regress ~opt:(opt ~add_constant_column:false ())) ;;
+Rm.input array -&gt; resp:float array -&gt; Rm.t = &lt;fun&gt;</span></code></pre>
 
-</section><section><h3>Three Reasons to use types in ML: 3.</h3>
+</section><section><h3>Three Reasons to use types in ML: Typeful transformations</h3>
+
+<ul><li class="fragment roll-in">regression, classification (... other methods) aren&#39;t <em>objects</em>:<ul><li class="fragment roll-in"><strong>Functors</strong>. Typeful transformations.</li></ul></li>
+<li class="fragment roll-in">Step 1.<ul><li><code>val linear_regress : float array -&gt; float array -&gt; float</code></li><li><code>val classifier : (clas * feature) list -&gt; (feature -&gt; clas Probabilities.t)</code></li><li>Really step 0.1</li></ul></li>
+<li class="fragment roll-in">Step 2. Dependent types?<ul><li>Normally distributed errors.</li><li>Data bounded to specific ranges.</li></ul></li></ul>
+
+</section><section><h3>Three Reasons to use types in ML: 4a.</h3>
 
 <p>Types can solve &quot;META&quot; problems:
 ex. Training vs Validation vs Testing</p>
@@ -558,27 +572,29 @@ ex. Training vs Validation vs Testing</p>
 </section><section><h3>Testing observations</h3>
 
 <ul><li class="fragment roll-in">If probabilistic, failure is important!</li>
-<li class="fragment roll-in">How do you test two methods that sum an array of floats?</li></ul>
+<li class="fragment roll-in">How do you test two methods that sum an array of floats?</li>
+<li class="fragment roll-in"><pre><span class="text">    </span><span class="kw">let</span><span class="text"> </span><span class="id">kahan_test</span><span class="text"> </span><span class="id">arr</span><span class="text"> =
+      </span><span class="kw">let</span><span class="text"> </span><span class="id">copy</span><span class="text"> = </span><span class="constant">false</span><span class="text"> </span><span class="kw">in</span><span class="text">
+      </span><span class="kw">let</span><span class="text"> </span><span class="id">nsum</span><span class="text"> = </span><span class="kw2">Array</span><span class="text">.</span><span class="id">fold_left</span><span class="text"> (+.) </span><span class="numeric">0</span><span class="text">. </span><span class="kw">in</span><span class="text">
+      </span><span class="kw">let</span><span class="text"> </span><span class="id">vals</span><span class="text"> = </span><span class="kw2">Array</span><span class="text">.</span><span class="id">init</span><span class="text"> </span><span class="id">permutations</span><span class="text"> (</span><span class="kw">fun</span><span class="text"> </span><span class="numeric">_</span><span class="text"> -&gt;
+        </span><span class="kw">let</span><span class="text"> </span><span class="id">sum_me</span><span class="text"> = </span><span class="id">permute</span><span class="text"> </span><span class="kw4">~copy</span><span class="text"> </span><span class="id">arr</span><span class="text"> </span><span class="kw">in</span><span class="text">
+        </span><span class="id">nsum</span><span class="text"> </span><span class="id">sum_me</span><span class="text">, </span><span class="id">sumf</span><span class="text"> </span><span class="id">sum_me</span><span class="text">)
+      </span><span class="kw">in</span><span class="text">
+      </span><span class="kw">let</span><span class="text"> </span><span class="id">naive_sums</span><span class="text">, </span><span class="id">kahan_sums</span><span class="text"> = </span><span class="kw2">Array</span><span class="text">.</span><span class="id">unzip</span><span class="text"> </span><span class="id">vals</span><span class="text"> </span><span class="kw">in</span><span class="text">
+      </span><span class="kw">let</span><span class="text"> </span><span class="id">make_set</span><span class="text">   = </span><span class="kw2">Array</span><span class="text">.</span><span class="id">fold_left</span><span class="text"> (</span><span class="kw">fun</span><span class="text"> </span><span class="id">s</span><span class="text"> </span><span class="id">e</span><span class="text"> -&gt; </span><span class="kw2">Fs</span><span class="text">.</span><span class="id">add</span><span class="text"> </span><span class="id">e</span><span class="text"> </span><span class="id">s</span><span class="text">) </span><span class="kw2">Fs</span><span class="text">.</span><span class="id">empty</span><span class="text"> </span><span class="kw">in</span><span class="text">
+      </span><span class="kw">let</span><span class="text"> </span><span class="id">uniq_naive</span><span class="text"> = </span><span class="id">make_set</span><span class="text"> </span><span class="id">naive_sums</span><span class="text"> |&gt; </span><span class="kw2">Fs</span><span class="text">.</span><span class="id">cardinal</span><span class="text"> </span><span class="kw">in</span><span class="text">
+      </span><span class="kw">let</span><span class="text"> </span><span class="id">uniq_kahan</span><span class="text"> = </span><span class="id">make_set</span><span class="text"> </span><span class="id">kahan_sums</span><span class="text"> |&gt; </span><span class="kw2">Fs</span><span class="text">.</span><span class="id">cardinal</span><span class="text"> </span><span class="kw">in</span><span class="text">
+      </span><span class="id">uniq_kahan</span><span class="text"> &lt;= </span><span class="id">uniq_naive</span><span class="text">)
+    </span></pre></li></ul>
 
-<pre><span class="kw">let</span><span class="text"> </span><span class="id">kahan_test</span><span class="text"> </span><span class="id">arr</span><span class="text"> =
-  </span><span class="kw">let</span><span class="text"> </span><span class="id">copy</span><span class="text"> = </span><span class="constant">false</span><span class="text"> </span><span class="kw">in</span><span class="text">
-  </span><span class="kw">let</span><span class="text"> </span><span class="id">nsum</span><span class="text"> = </span><span class="kw2">Array</span><span class="text">.</span><span class="id">fold_left</span><span class="text"> (+.) </span><span class="numeric">0</span><span class="text">. </span><span class="kw">in</span><span class="text">
-  </span><span class="kw">let</span><span class="text"> </span><span class="id">vals</span><span class="text"> = </span><span class="kw2">Array</span><span class="text">.</span><span class="id">init</span><span class="text"> </span><span class="id">permutations</span><span class="text"> (</span><span class="kw">fun</span><span class="text"> </span><span class="numeric">_</span><span class="text"> -&gt;
-    </span><span class="kw">let</span><span class="text"> </span><span class="id">sum_me</span><span class="text"> = </span><span class="id">permute</span><span class="text"> </span><span class="kw4">~copy</span><span class="text"> </span><span class="id">arr</span><span class="text"> </span><span class="kw">in</span><span class="text">
-    </span><span class="id">nsum</span><span class="text"> </span><span class="id">sum_me</span><span class="text">, </span><span class="id">sumf</span><span class="text"> </span><span class="id">sum_me</span><span class="text">)
-  </span><span class="kw">in</span><span class="text">
-  </span><span class="kw">let</span><span class="text"> </span><span class="id">naive_sums</span><span class="text">, </span><span class="id">kahan_sums</span><span class="text"> = </span><span class="kw2">Array</span><span class="text">.</span><span class="id">unzip</span><span class="text"> </span><span class="id">vals</span><span class="text"> </span><span class="kw">in</span><span class="text">
-  </span><span class="kw">let</span><span class="text"> </span><span class="id">make_set</span><span class="text">   = </span><span class="kw2">Array</span><span class="text">.</span><span class="id">fold_left</span><span class="text"> (</span><span class="kw">fun</span><span class="text"> </span><span class="id">s</span><span class="text"> </span><span class="id">e</span><span class="text"> -&gt; </span><span class="kw2">Fs</span><span class="text">.</span><span class="id">add</span><span class="text"> </span><span class="id">e</span><span class="text"> </span><span class="id">s</span><span class="text">) </span><span class="kw2">Fs</span><span class="text">.</span><span class="id">empty</span><span class="text"> </span><span class="kw">in</span><span class="text">
-  </span><span class="kw">let</span><span class="text"> </span><span class="id">uniq_naive</span><span class="text"> = </span><span class="id">make_set</span><span class="text"> </span><span class="id">naive_sums</span><span class="text"> |&gt; </span><span class="kw2">Fs</span><span class="text">.</span><span class="id">cardinal</span><span class="text"> </span><span class="kw">in</span><span class="text">
-  </span><span class="kw">let</span><span class="text"> </span><span class="id">uniq_kahan</span><span class="text"> = </span><span class="id">make_set</span><span class="text"> </span><span class="id">kahan_sums</span><span class="text"> |&gt; </span><span class="kw2">Fs</span><span class="text">.</span><span class="id">cardinal</span><span class="text"> </span><span class="kw">in</span><span class="text">
-  </span><span class="id">uniq_kahan</span><span class="text"> &lt;= </span><span class="id">uniq_naive</span><span class="text">)</span></pre>
+</section><section><h3>Testing observations: WIP</h3>
 
-</section><section><h3>Testing observations</h3>
+<ol><li class="fragment roll-in">Difficult to structure.<ul><li class="fragment roll-in">Different dependencies:</li>
+<li class="fragment roll-in">Util &lt; Statistics &lt; Regression</li>
+<li class="fragment roll-in">Util &lt; Regression &lt; Statistics</li></ul></li>
+<li class="fragment roll-in">Difficult to convey to user.</li></ol>
 
-<p>Difficult to structure.</p>
-<ul><li>Different dependencies:</li><li>Util &lt; Statistics &lt; Regression</li><li>Util &lt; Regression &lt; Statistics</li></ul>
-
-</section><section><h3>Thanks</h3><ul><li><a href='http://www.hammerlab.org/'>Hammer Lab - www.hammerlab.org</a><ul><li>Jeff Hammerbacher</li><li>Sebastien Mondet</li><li>Isaac Hodes</li></ul></li><li>Carmelo Piccione</li><li>Shoulders of giants:<ul><li><a href='http://www.ocaml.info/'>Markus Mottl</a>, <code>Lacaml</code></li><li><a href='https://github.com/Chris00'>Christophe Troestler</a>, <code>L-BFGS</code></li></ul></li></ul>
+</section><section><h3>Thanks and questions.</h3><ul><li><a href='http://www.hammerlab.org/'>Hammer Lab - www.hammerlab.org</a><ul><li>Jeff Hammerbacher</li><li>Sebastien Mondet</li><li>Isaac Hodes</li></ul></li><li>Carmelo Piccione</li><li>Shoulders of giants:<ul><li><a href='http://www.ocaml.info/'>Markus Mottl</a>, <code>Lacaml</code></li><li><a href='https://github.com/Chris00'>Christophe Troestler</a>, <code>L-BFGS</code></li></ul></li></ul>
 
 </section><section><h3>Presentation Credit</h3>
 
@@ -620,7 +636,7 @@ ex. Training vs Validation vs Testing</p>
 
 </section><section><h3>Meta</h3>
 
-<ul><li>Compiled on <code>Wed, 03 Feb 2016 19:19:00 -0500</code></li><li>Git: <code>8e801b5-dirty</code></li></ul></section></div></div>
+<ul><li>Compiled on <code>Thu, 04 Feb 2016 00:31:24 -0500</code></li><li>Git: <code>3d176c6-dirty</code></li></ul></section></div></div>
 
     
 
@@ -644,8 +660,8 @@ ex. Training vs Validation vs Testing</p>
         slideNumber: true,
         //width: 1000,
         height: 1000,
-        //margin: 0.0,
-        //Bounds for smallest/largest possible scale to apply to content
+        //margin: 0.1,
+        // Bounds for smallest/largest possible scale to apply to content
         //minScale: 0.2,
         //maxScale: 1.0,
 
